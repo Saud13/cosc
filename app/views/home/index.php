@@ -1,6 +1,11 @@
 <?php
 	
-	echo "Hello " . $_SESSION['username']." You are in and failed attempts is " . $_SESSION['report'];
+	echo "Hello, " . $_SESSION['username']." You're logged in!";
+       if($_SESSION['report']>0){
+              
+           echo " and failed attempts is " . $_SESSION['report'];
+              
+       }
 	echo " Date is " . date("Y/m/d") . " Time is " . date("h/i/s");
 	//for refresh page skip
 	if (!empty($_SESSION['authenticated '])){ 
