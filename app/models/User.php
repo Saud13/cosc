@@ -47,7 +47,7 @@ class User {
 
     public function register($username, $password, $fname, $lname, $email) {
 
-        if (strlen($password) > 7) {
+        if (strlen($password) > 7 && (strlen($password)<17)) {
 
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
 
@@ -64,7 +64,11 @@ class User {
 
             $_SESSION['auth'] = true;
         } else {
-            header('Location: /login/register');
+            echo "Password strength must be between 8-16";
+            header('Refresh:5; url= /login/register');
+            //header("Refresh:5; url=register.php"); 
+           // header('Location: /login/register');
+            
         }
     }
 
