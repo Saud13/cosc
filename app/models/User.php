@@ -16,10 +16,7 @@ class User {
     }
 
     public function authenticate() {
-        /*
-         * if username and password good then
-         * $this->auth = true;
-         */
+       
         $db = db_connect();
         $statement = $db->prepare("select Username, Password from users
                                 WHERE Username = :name;");
@@ -32,9 +29,10 @@ class User {
         if (!password_verify($password, $hash_pwd)) {
             $att = $att + 1;
             $_SESSION['report'] = $_SESSION['report'] + 1;
-            $db = db_connect();
 
-            $statement = $db->prepare("INSERT INTO log (Username, Attempts, Time)"
+
+            $db = db_connect();
+            $statement = $db->prepare("INSERT INTO log (Username,Attempts,Time)"
                     . "VALUES (:username, :attempts, :time ); ");
             $statement->bindValue(':username', $this->$username);
             $statement->bindValue(':attempts', $this->$att);
@@ -49,7 +47,7 @@ class User {
 
     public function register($username, $password, $fname, $lname, $email) {
 
-        if (strlen($password) >= 8) {
+        if (strlen($password) > 7) {
 
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
 

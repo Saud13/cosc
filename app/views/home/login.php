@@ -1,9 +1,12 @@
+<!DOCTYPE html>
 <?php require_once '../app/views/templates/headerPublic.php' ?>
 <html>
     <body>
-        <form 
-
-            method="post" action="/login/index">
+        
+           <body style="background-color:darkorange;">
+           
+            
+            <form method="post" action="/login/index">
             Username:<br/>
             <input type="text" name="username"><br/>
             Password<br/>
@@ -17,7 +20,7 @@
             <br/>
 
             <a href="/login/register"> Create Account </a>
-        </form>
+        
 
     </body>
 </html>

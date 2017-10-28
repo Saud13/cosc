@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+ <body style="background-color:darkorange;">
+
+
+</body>
+
 <?php require_once '../app/views/templates/headerPublic.php' ?>
 <html>
     <body>

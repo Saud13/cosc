@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+ <body style="background-color:darkorange;">
+
+
+</body>
+
 <?php
 echo "Hello, " . $_SESSION['username'] . " You're logged in!";
 if ($_SESSION['report'] > 0) {
@@ -12,7 +19,9 @@ if ($_SESSION['report'] > 0) {
     }
 }
 echo "<br>"; //new line
-echo " Date is " . date("Y/m/d") . " Time is " . date("h/i/s");
+echo " Date is " . date("Y/m/d");
+echo "<br>"; //new line
+echo "Time is " . date("h/i/s");
 //for refresh page skip
 if (!empty($_SESSION['authenticated '])) {
     header("Location: /logout");
