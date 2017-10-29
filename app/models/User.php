@@ -16,7 +16,7 @@ class User {
     }
 
     public function authenticate() {
-        
+
         $db = db_connect();
         $statement = $db->prepare("select Username, Password from users
                                 WHERE Username = :name;");
@@ -26,11 +26,11 @@ class User {
         $hash_pwd = $rows[0]['Password'];
         $password = $this->password;
 
-        
+
         if (!password_verify($password, $hash_pwd)) {
             $att = $att + 1;
             $_SESSION['report'] = $_SESSION['report'] + 1;
-            
+
             $att = 1;
             $statement = $db->prepare("select * from my_log
                                 WHERE Username = :name;");
@@ -59,16 +59,13 @@ class User {
             $this->auth = true;
             $_SESSION['username'] = $rows[0]['Username'];
             $_SESSION['password'] = $rows[0]['Password'];
-           
         }
     }
 
     public function register($username, $password, $fname, $lname, $email) {
 
-        if (strlen($password) >= 8) {
-
+        if (strlen($password) >= 8 && (strlen($password) <= 18)) {
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
-
             $db = db_connect();
             $statement = $db->prepare("INSERT INTO users (Username, Password, FirstName, LastName, Email)"
                     . "VALUES (:username, :password, :firstName, :lastName, :email ); ");
@@ -85,8 +82,7 @@ class User {
             echo "Password strength must be between 8-16";
             header('Refresh:5; url= /login/register');
             //header("Refresh:5; url=register.php"); 
-            // header('Location: /login/register');
-            
+            //header('Location: /login/register');
         }
     }
 
