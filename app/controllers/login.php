@@ -27,7 +27,9 @@ class Login extends Controller {
         }
        header('Location: /home');
     }
-	
+    
+  
+        
 	public function register () {
 		
 		$user = $this->model('User');
