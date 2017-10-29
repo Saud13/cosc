@@ -30,13 +30,13 @@ class User {
             $att = $att + 1;
             $_SESSION['report'] = $_SESSION['report'] + 1;
 
-
             
         } else {
             $this->auth = true;
             $_SESSION['username'] = $rows[0]['Username'];
             $_SESSION['password'] = $rows[0]['Password'];
-        }
+           
+        } 
     }
 
     public function register($username, $password, $fname, $lname, $email) {
