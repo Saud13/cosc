@@ -31,13 +31,7 @@ class User {
             $_SESSION['report'] = $_SESSION['report'] + 1;
 
 
-            $db = db_connect();
-            $statement = $db->prepare("INSERT INTO log (Username,Attempts,Time)"
-                    . "VALUES (:username, :attempts, :time ); ");
-            $statement->bindValue(':username', $this->$username);
-            $statement->bindValue(':attempts', $this->$att);
-            $statement->bindValue(':time', time());
-            $statement->execute();
+            
         } else {
             $this->auth = true;
             $_SESSION['username'] = $rows[0]['Username'];
@@ -46,7 +40,7 @@ class User {
     }
 
     public function register($username, $password, $fname, $lname, $email) {
-
+        
         if (strlen($password) > 7 && (strlen($password)<17)) {
 
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
@@ -54,7 +48,7 @@ class User {
             $db = db_connect();
             $statement = $db->prepare("INSERT INTO users (Username, Password, FirstName, LastName, Email)"
                     . "VALUES (:username, :password, :firstName, :lastName, :email ); ");
-
+            
             $statement->bindValue(':username', $username);
             $statement->bindValue(':password', $hashPass);
             $statement->bindValue(':firstName', $fname);
