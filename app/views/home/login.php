@@ -4,11 +4,7 @@
     <body>
 
         <h1 style="color:black;">
-
-
             <body style="background-color:darkorange;">
-
-
                 <form method="post" action="/login/index">
                     Username:<br/>
                     <input type="text" name="username"><br/>
@@ -18,11 +14,12 @@
                     <input type="submit" value="Login">
                     <br/>
                     <br/>
-                    <a href="/Reports/attempts"> Report </a>
+                  <a style="color:whitesmoke;"> <a href="/Reports/attempts"> Report </a>
+          
                     <br/>
                     <br/>
 
-                    <a href="/login/register"> Create Account </a>
+                  <a style="color:whitesmoke;">  <a href="/login/register"> Create Account </a>
         </h1>
 
     </body>
