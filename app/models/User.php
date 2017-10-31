@@ -26,29 +26,31 @@ class User {
         $hash_pwd = $rows[0]['Password'];
         $password = $this->password;
 
-
         if (!password_verify($password, $hash_pwd)) {
-            $att = $att + 1;
-            $_SESSION['report'] = $_SESSION['report'] + 1;
-
             $att = 1;
-            $statement = $db->prepare("select * from my_log
+            $statement = $db->prepare("select * from tracking
                                 WHERE Username = :name;");
             $statement->bindValue(':name', $this->username);
             $statement->execute();
             $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $atts = $rows[0]['attempt'];
 
-            if ($rows) {
-                $att_num_data = $rows[0]['attempt'];
-
-                $att = $att_num_data + 1;
-                $statement = $db->prepare("UPDATE my_log SET attempt = :att WHERE Username = :user");
+            if ($atts >= 3) {
+                sleep(55);
+                $statement = $db->prepare("UPDATE tracking SET attempt = :att WHERE Username = :user");
+                $statement->bindValue(':user', $this->username);
+                $statement->bindValue(':att', 0);
+                $statement->execute();
+                $this->auth = false;
+            } else if ($rows) {
+                $att = $atts + 1;
+                $statement = $db->prepare("UPDATE tracking SET attempt = :att WHERE Username = :user");
                 $statement->bindValue(':user', $this->username);
                 $statement->bindValue(':att', $att);
                 $statement->execute();
             } else {
 
-                $statement1 = $db->prepare("INSERT INTO my_log (Username, attempt)"
+                $statement1 = $db->prepare("INSERT INTO tracking (Username, attempt)"
                         . "VALUES (:username, :attempts); ");
                 $statement1->bindValue(':username', $this->username);
                 $statement1->bindValue(':attempts', $att);
@@ -65,7 +67,9 @@ class User {
     public function register($username, $password, $fname, $lname, $email) {
 
         if (strlen($password) >= 8 && (strlen($password) <= 18)) {
+
             $hashPass = password_hash($password, PASSWORD_DEFAULT);
+
             $db = db_connect();
             $statement = $db->prepare("INSERT INTO users (Username, Password, FirstName, LastName, Email)"
                     . "VALUES (:username, :password, :firstName, :lastName, :email ); ");
@@ -79,10 +83,8 @@ class User {
 
             $_SESSION['auth'] = true;
         } else {
-            echo "Password strength must be between 8-16";
-            header('Refresh:5; url= /login/register');
-            //header("Refresh:5; url=register.php"); 
-            //header('Location: /login/register');
+            echo "Password strength must be between 8-16"; //message for user
+            header('Refresh:5; url= /login/register'); // refresh page after 5 secs}
         }
     }
 
